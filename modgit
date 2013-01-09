@@ -19,6 +19,7 @@ Module Commands:
 ----------------------------------------------------------------
   clone <module> <src>    clone a git repository
   update <module>         update module
+  deploy <module>         deploy module
   remove <module>         remove module
   [<git options>]         specify additional parameters to git clone
   -i                      include filter: -i app/ -i README [...]
@@ -288,6 +289,31 @@ update_module()
   fi
 }
 
+# Updates a module
+deploy_module()
+{
+  local module=$1
+  local module_dir="$modgit_dir/$module"
+  local source_dir="$module_dir/source"
+  local success=0
+
+  require_module_dir "$module"
+
+  cd "$source_dir"
+
+  #git pull && git submodule update --init --recursive && success=1
+
+  #if [ $success -eq 1 ] &&
+  if delete_files "$module" &&
+    move_files "$module";
+  then
+    return 0
+  else
+    return 1
+  fi
+}
+
+
 # Try to find dev dir
 _pwd=$(pwd -P)
 root=$_pwd
@@ -403,6 +429,16 @@ case "$action" in
       echo_b "Update of $module complete."
     else
       echo_b "Error updating $module, operation cancelled."
+    fi
+    ;;
+
+  deploy)
+
+    if deploy_module "$module"
+    then
+      echo_b "deploy of $module complete."
+    else
+      echo_b "Error deploying $module, operation cancelled."
     fi
     ;;
 
