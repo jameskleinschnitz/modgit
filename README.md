@@ -35,6 +35,10 @@ Install a module:
 Update a module:
 
     $ modgit update <module>
+    
+Deploy a modules changes locally:
+
+    $ modgit deploy <module>
 
 Update all modules:
 
