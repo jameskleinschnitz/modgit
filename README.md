@@ -15,7 +15,7 @@
 * sudo mv modgit /usr/local/bin
 
 ### wget installation
-* wget -O modgit https://raw.github.com/jreinke/modgit/master/modgit
+* wget -O modgit https://raw.github.com/jameskleinschnitz/modgit/master/modgit
 * chmod +x modgit
 * sudo mv modgit /usr/local/bin
 
