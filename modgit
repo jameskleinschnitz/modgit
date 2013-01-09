@@ -371,7 +371,7 @@ fi
 # Handle all other module-specific commands #
 #############################################
 
-REGEX_ACTION='(clone|update|remove|tmp)'
+REGEX_ACTION='(clone|update|deploy|remove|tmp)'
 
 # Action is first argument
 action=''
