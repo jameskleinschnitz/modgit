@@ -8,7 +8,7 @@ Module Git (v$version)
 Global Commands:
   $script [options] <command>
 -------------------------------
-  init                    initialize .modgit folder
+  init                    initialize dev folder
   list                    list all modules that are currently installed
   update-all              update all modules that are currently installed
   -h                      this help
@@ -91,9 +91,9 @@ echo_b()
   fi
 }
 
-# Initializes .modgit folder in root dir then quit
+# Initializes dev folder in root dir then quit
 if [ "$1" = "init" ]; then
-  mkdir .modgit || { echo_b "Could not create .modgit directory" && exit 1; }
+  mkdir dev || { echo_b "Could not create dev directory" && exit 1; }
   echo_b "Initialized Module Git at $(pwd)"
   exit 0
 fi
@@ -113,7 +113,7 @@ delete_files()
 {
   local module=$1
   local module_dir="$modgit_dir/$module"
-  local deployed_file="$module_dir/deployed.modgit"
+  local deployed_file="$module_dir/deployeddev"
 
   while read line; do
     if ! [ -z $line ] && [ -f "$root/$line" ]; then
@@ -160,10 +160,10 @@ move_files()
   local module=$1
   local module_dir="$modgit_dir/$module"
   local source_dir="$module_dir/source"
-  local includes_file="$module_dir/includes.modgit"
-  local excludes_file="$module_dir/excludes.modgit"
+  local includes_file="$module_dir/includesdev"
+  local excludes_file="$module_dir/excludesdev"
   local modman_file="$source_dir/modman"
-  local deployed_file="$module_dir/deployed.modgit"
+  local deployed_file="$module_dir/deployeddev"
 
   cd "$source_dir" || return 1
 
@@ -255,10 +255,10 @@ create_module()
   fi
 
   if ! [ -z $includes ]; then
-    echo -e $includes > "$module_dir/includes.modgit"
+    echo -e $includes > "$module_dir/includesdev"
   fi
   if ! [ -z $excludes ]; then
-    echo -e $excludes > "$module_dir/excludes.modgit"
+    echo -e $excludes > "$module_dir/excludesdev"
   fi
 
   return 0
@@ -288,15 +288,15 @@ update_module()
   fi
 }
 
-# Try to find .modgit dir
+# Try to find dev dir
 _pwd=$(pwd -P)
 root=$_pwd
-if ! [ -d $root/.modgit ]; then
+if ! [ -d $root/dev ]; then
   echo_b "-e" "Module Git directory not found.\nRun \"$script init\" in the root of your project."
   exit 1
 fi
 
-modgit_dir=$root/.modgit # path to .modgit
+modgit_dir=$root/dev # path to dev
 
 # list command
 if [ "$1" = "list" ]; then
