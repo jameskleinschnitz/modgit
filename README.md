@@ -10,7 +10,7 @@
 ## Installation
 
 ### curl installation
-* curl https://raw.github.com/jreinke/modgit/master/modgit > modgit
+* curl https://raw.github.com/jameskleinschnitz/modgit/master/modgit > modgit
 * chmod +x modgit
 * sudo mv modgit /usr/local/bin
 
